@@ -1,5 +1,6 @@
 package usantatecla.draughts.models;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,8 @@ public class CoordinateTest {
 
     private Coordinate coordinate;
 
-    public CoordinateTest() {
+    @Before
+    public void before() {
         this.coordinate = new CoordinateBuilder().build();
     }
 

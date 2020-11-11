@@ -1,5 +1,6 @@
 package usantatecla.draughts.models;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,8 @@ public class BoardTest {
 
     private Board board;
 
-    public BoardTest() {
+    @Before
+    public void before() {
         this.board = new Board();
     }
 

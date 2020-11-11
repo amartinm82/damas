@@ -1,5 +1,6 @@
 package usantatecla.draughts.models;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +10,8 @@ public class GameTest {
     private Game game;
     private Board board;
 
-    public GameTest() {
+    @Before
+    public void before() {
         this.board = new Board();
         this.game = new Game(board);
     }
@@ -77,7 +79,6 @@ public class GameTest {
     }
 
     //TODO: pending tests of move since isCorrectPairMove
-
 
 
 }

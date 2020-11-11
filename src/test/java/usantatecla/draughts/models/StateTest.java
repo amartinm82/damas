@@ -1,15 +1,16 @@
 package usantatecla.draughts.models;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class StateTest {
 
     private State state;
 
-    public StateTest() {
+    @Before
+    public void before() {
         this.state = new State();
     }
 
@@ -26,25 +27,24 @@ public class StateTest {
 
     @Test
     public void testGivenNewStateWhenDoThreeNextAndGetValueStateThenIsExit() {
-        this.state.next();
-        this.state.next();
-        this.state.next();
+        for (int i = 0; i < StateValue.values().length - 1; i++) {
+            this.state.next();
+        }
         assertEquals(StateValue.EXIT, this.state.getValueState());
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenNewStateWhenDoFourNextAndGetValueStateThenFails() {
-        this.state.next();
-        this.state.next();
-        this.state.next();
-        this.state.next();
+        for (int i = 0; i < StateValue.values().length; i++) {
+            this.state.next();
+        }
     }
 
     @Test
     public void testGivenNewStateWhenDoThreeNextAndResetAndGetValueStateThenIsInitial() {
-        this.state.next();
-        this.state.next();
-        this.state.next();
+        for (int i = 0; i < StateValue.values().length - 1; i++) {
+            this.state.next();
+        }
         this.state.reset();
         assertEquals(StateValue.INITIAL, this.state.getValueState());
     }

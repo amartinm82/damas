@@ -7,7 +7,7 @@ class CoordinateBuilder {
 
     CoordinateBuilder() {
         this.row = 0;
-        this.column = 7;
+        this.column = Coordinate.getDimension() - 1;
     }
 
     CoordinateBuilder row(int row) {
