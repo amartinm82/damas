@@ -8,10 +8,15 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     private Board board;
+    private Coordinate origin;
+    private Piece piece;
 
     @Before
     public void before() {
         this.board = new Board();
+        this.origin = new CoordinateBuilder().build();
+        this.piece = new Pawn(Color.BLACK);
+        this.board.put(origin, piece);
     }
 
     @Test(expected = AssertionError.class)
@@ -21,12 +26,12 @@ public class BoardTest {
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenGetPieceWithCoordinateOutOfBoardLimitsThenShouldThrowsAnAssertionError() {
-        this.board.getPiece(new CoordinateBuilder().row(8).column(8).build());
+        this.board.getPiece(outOfBoardLimitsCoordinate());
     }
 
     @Test
     public void testGivenABoardWhenGetPieceWithCoordinateWhereThereIsNotAPieceThenReturnNull() {
-        assertNull(this.board.getPiece(new CoordinateBuilder().build()));
+        assertNull(this.board.getPiece(emptyCoordinate()));
     }
 
     @Test(expected = AssertionError.class)
@@ -36,54 +41,42 @@ public class BoardTest {
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenPutWithCoordinateOutOfBoardLimitsThenShouldThrowAnAssertionError() {
-        this.board.put(new CoordinateBuilder().row(-1).build(), null);
+        this.board.put(outOfBoardLimitsCoordinate(), null);
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenPutPieceInCoordinateWhereAlreadyThereIsAPieceThenThrowsAssertionError() {
-        Coordinate origin = new CoordinateBuilder().build();
-        Piece piece = new Pawn(Color.BLACK);
         Piece coordinatePiece = new Pawn(Color.WHITE);
         this.board.put(origin, coordinatePiece);
-        this.board.put(origin, piece);
     }
 
     @Test
     public void testGivenABoardWhenPutPieceOnCoordinateAndGetPieceWithCoordinateThenReturnPiece() {
-        Coordinate coordinate = new CoordinateBuilder().build();
-        Piece piece = new Pawn(Color.BLACK);
-        this.board.put(coordinate, piece);
-        assertEquals(piece, this.board.getPiece(coordinate));
+        assertEquals(this.piece, this.board.getPiece(this.origin));
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenRemovePieceFromCoordinateWithoutPieceThenThrowsAssertionError() {
-        this.board.remove(new CoordinateBuilder().build());
+        this.board.remove(emptyCoordinate());
     }
 
     @Test
     public void testGivenABoardWhenRemovePieceFromCoordinateThenReturnPieceAndSetCoordinateToNull() {
-        Coordinate coordinate = new CoordinateBuilder().build();
-        Piece piece = new Pawn(Color.BLACK);
-        this.board.put(coordinate, piece);
-        assertEquals(piece, this.board.remove(coordinate));
-        assertNull(this.board.getPiece(coordinate));
+        assertEquals(this.piece, this.board.remove(this.origin));
+        assertNull(this.board.getPiece(this.origin));
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenMoveWithThereIsNotPieceInOriginCoordinateThenThrowsAssertionError() {
-        this.board.move(new CoordinateBuilder().build(), null);
+        this.board.move(emptyCoordinate(), null);
     }
 
     @Test
     public void testGivenABoardWhenMoveThenPieceIsMoved() {
-        Coordinate origin = new CoordinateBuilder().build();
         Coordinate target = new CoordinateBuilder().row(1).column(6).build();
-        Piece piece = new Pawn(Color.BLACK);
-        this.board.put(origin, piece);
-        this.board.move(origin, target);
-        assertNull(this.board.getPiece(origin));
-        assertEquals(piece, this.board.getPiece(target));
+        this.board.move(this.origin, target);
+        assertNull(this.board.getPiece(this.origin));
+        assertEquals(this.piece, this.board.getPiece(target));
     }
 
     @Test(expected = AssertionError.class)
@@ -93,13 +86,13 @@ public class BoardTest {
 
     @Test(expected = AssertionError.class)
     public void testGivenABoardWhenGetBetweenDiagonalPiecesWithNullTargetThenThrowsAssertionError() {
-        this.board.getBetweenDiagonalPieces(new CoordinateBuilder().build(), null);
+        this.board.getBetweenDiagonalPieces(this.origin, null);
     }
 
     @Test
     public void testGivenABoardWhenGetBetweenDiagonalPiecesWithPiecesNotOnDiagonalThenReturnEmptyPiecesList() {
         assertTrue(this.board.getBetweenDiagonalPieces(
-                new CoordinateBuilder().build(), new CoordinateBuilder().column(0).build()).isEmpty());
+                this.origin, new CoordinateBuilder().column(0).build()).isEmpty());
     }
 
     @Test
@@ -114,34 +107,35 @@ public class BoardTest {
         }
         assertArrayEquals(new Piece[]{blackPawn, blackPawn, whitePawn, whitePawn},
                 this.board.getBetweenDiagonalPieces(
-                        new CoordinateBuilder().build(),
+                        this.origin,
                         new CoordinateBuilder().row(7).column(0).build()).toArray());
     }
 
     @Test
     public void testGivenABoardWhenGetColorWithNoPieceOnCoordinateThenReturnNull() {
-        assertNull(this.board.getColor(new CoordinateBuilder().build()));
+        assertNull(this.board.getColor(emptyCoordinate()));
     }
 
     @Test
     public void testGivenABoardWhenGetColorWithPieceOnCoordinateThenReturnPieceColor() {
-        Coordinate origin = new CoordinateBuilder().build();
-        Piece piece = new Pawn(Color.BLACK);
-        this.board.put(origin, piece);
-        assertEquals(Color.BLACK, this.board.getColor(new CoordinateBuilder().build()));
+        assertEquals(Color.BLACK, this.board.getColor(this.origin));
     }
 
     @Test
     public void testGivenABoardWhenIsEmptyWithEmptyCoordinateThenReturnTrue() {
-        assertTrue(this.board.isEmpty(new CoordinateBuilder().build()));
+        assertTrue(this.board.isEmpty(emptyCoordinate()));
     }
 
     @Test
     public void testGivenABoardWhenIsEmptyWithNotEmptyCoordinateThenReturnFalse() {
-        Coordinate coordinate = new CoordinateBuilder().build();
-        Piece piece = new Pawn(Color.BLACK);
-        this.board.put(coordinate, piece);
-        assertFalse(this.board.isEmpty(coordinate));
+        assertFalse(this.board.isEmpty(this.origin));
     }
 
+    private static Coordinate outOfBoardLimitsCoordinate() {
+        return new CoordinateBuilder().row(8).column(8).build();
+    }
+
+    private static Coordinate emptyCoordinate() {
+        return new CoordinateBuilder().column(5).build();
+    }
 }

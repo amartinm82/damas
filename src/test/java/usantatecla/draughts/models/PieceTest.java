@@ -25,7 +25,7 @@ public abstract class PieceTest {
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithPairOutOfLimitsThenThrowAssertionError() {
-        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 2, this.createSameRowCoordinates());
+        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 2, createSameRowCoordinates());
     }
 
     @Test(expected = AssertionError.class)
@@ -41,31 +41,31 @@ public abstract class PieceTest {
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithCoordinatesNotOnDiagonalThenReturnNotDiagonalError() {
         assertEquals(Error.NOT_DIAGONAL,
-                this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, this.createSameRowCoordinates()));
+                this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, createSameRowCoordinates()));
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithNullDiagonalPiecesThenThrowsAssertionError() {
-        this.piece.isCorrectMovement(null, 0, this.createOnDiagonalCoordinates(Color.BLACK, 1));
+        this.piece.isCorrectMovement(null, 0, createOnDiagonalCoordinates(Color.BLACK, 1));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithEatingColleaguePiecesThenReturnColleagueEatingError() {
         assertEquals(Error.COLLEAGUE_EATING,
                 this.piece.isCorrectMovement(Collections.singletonList(this.createPiece(this.piece.getColor())), 0,
-                        this.createOnDiagonalCoordinates(this.piece.getColor(), 1)));
+                        createOnDiagonalCoordinates(this.piece.getColor(), 1)));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithCorrectMovementThenReturnNull() {
         assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.EMPTY_LIST, 0,
-                this.createOnDiagonalCoordinates(Color.BLACK, 1)));
+                createOnDiagonalCoordinates(Color.BLACK, 1)));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithCorrectEatingMovementThenReturnNull() {
         assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.singletonList(this.createPiece(Color.WHITE)), 0,
-                this.createOnDiagonalCoordinates(Color.BLACK, 2)));
+                createOnDiagonalCoordinates(Color.BLACK, 2)));
     }
 
     @Test(expected = AssertionError.class)
@@ -105,42 +105,42 @@ public abstract class PieceTest {
 
     @Test
     public void testGivenAPieceWhenCheckIsAdvancedWithCoordinatesInSameRowThenReturnFalse() {
-        Coordinate[] coordinates = this.createSameRowCoordinates();
+        Coordinate[] coordinates = createSameRowCoordinates();
         assertFalse(this.piece.isAdvanced(coordinates[0], coordinates[1]));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsAdvancedAndPieceIsWhiteAndNotAdvanceThenReturnFalse() {
-        Coordinate[] coordinates = this.createOnDiagonalCoordinates(Color.WHITE, 1);
+        Coordinate[] coordinates = createOnDiagonalCoordinates(Color.WHITE, 1);
         assertFalse(this.createPiece(Color.WHITE).isAdvanced(coordinates[1], coordinates[0]));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsAdvancedAndPieceIsBlackAndNotAdvanceThenReturnFalse() {
-        Coordinate[] coordinates = this.createOnDiagonalCoordinates(Color.BLACK, 1);
+        Coordinate[] coordinates = createOnDiagonalCoordinates(Color.BLACK, 1);
         assertFalse(this.createPiece(Color.BLACK).isAdvanced(coordinates[1], coordinates[0]));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsAdvancedAndPieceIsWhiteAndAdvanceThenReturnTrue() {
-        Coordinate[] coordinates = this.createOnDiagonalCoordinates(Color.WHITE, 1);
+        Coordinate[] coordinates = createOnDiagonalCoordinates(Color.WHITE, 1);
         assertTrue(this.createPiece(Color.WHITE).isAdvanced(coordinates[0], coordinates[1]));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsAdvancedAndPieceIsBlackAndAdvanceThenReturnTrue() {
-        Coordinate[] coordinates = this.createOnDiagonalCoordinates(Color.BLACK, 1);
+        Coordinate[] coordinates = createOnDiagonalCoordinates(Color.BLACK, 1);
         assertTrue(this.createPiece(Color.BLACK).isAdvanced(coordinates[0], coordinates[1]));
     }
 
-    protected Coordinate[] createSameRowCoordinates() {
+    protected static Coordinate[] createSameRowCoordinates() {
         return new Coordinate[]{
                 new CoordinateBuilder().build(),
                 new CoordinateBuilder().build()
         };
     }
 
-    protected Coordinate[] createOnDiagonalCoordinates(Color color, int distance) {
+    protected static Coordinate[] createOnDiagonalCoordinates(Color color, int distance) {
         List<Coordinate> coordinates = Arrays.asList(
                 new CoordinateBuilder().build(),
                 new CoordinateBuilder().row(distance).column(MAX_ROW - distance).build()

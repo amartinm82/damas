@@ -19,10 +19,10 @@ public class DirectionTest {
     public Coordinate coordinate;
 
     @Parameterized.Parameter(2)
-    public int distance;
+    public boolean expectedIsOnDirection;
 
     @Parameterized.Parameter(3)
-    public boolean expectedIsOnDirection;
+    public int distance;
 
     @Parameterized.Parameter(4)
     public Coordinate expectedCoordinate;
@@ -30,20 +30,20 @@ public class DirectionTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Direction.NE, new CoordinateBuilder().row(7).column(7).build(), 2, true, new CoordinateBuilder().row(2).column(2).build()},
-                {Direction.NE, new CoordinateBuilder().build(), 3, false, new CoordinateBuilder().row(3).column(3).build()},
-                {Direction.NE, new CoordinateBuilder().column(0).build(), 4, false, new CoordinateBuilder().row(4).column(4).build()},
-                {Direction.NE, new CoordinateBuilder().row(-1).column(-1).build(), 0, false, new CoordinateBuilder().column(0).build()},
-                {Direction.NE, new CoordinateBuilder().row(1).column(-1).build(), -2, false, new CoordinateBuilder().row(-2).column(-2).build()},
-                {Direction.SE, new CoordinateBuilder().row(-7).column(7).build(), 2, true, new CoordinateBuilder().row(-2).column(2).build()},
-                {Direction.SE, new CoordinateBuilder().row(1).column(-1).build(), 0, false, new CoordinateBuilder().column(0).build()},
-                {Direction.SE, new CoordinateBuilder().row(-1).column(-1).build(), 2, false, new CoordinateBuilder().row(-2).column(2).build()},
-                {Direction.SW, new CoordinateBuilder().row(-7).column(-7).build(), -2, true, new CoordinateBuilder().row(2).column(2).build()},
-                {Direction.SW, new CoordinateBuilder().row(1).column(-1).build(), 0, false, new CoordinateBuilder().column(0).build()},
-                {Direction.SW, new CoordinateBuilder().row(-1).column(1).build(), 2, false, new CoordinateBuilder().row(-2).column(-2).build()},
-                {Direction.NW, new CoordinateBuilder().row(7).column(-7).build(), 2, true, new CoordinateBuilder().row(2).column(-2).build()},
-                {Direction.NW, new CoordinateBuilder().row(-1).column(-1).build(), 0, false, new CoordinateBuilder().column(0).build()},
-                {Direction.NW, new CoordinateBuilder().row(1).column(1).build(), -2, false, new CoordinateBuilder().row(-2).column(2).build()}
+                {Direction.NE, notEqualsRowAndColumnCoordinate(), false, 3, new CoordinateBuilder().row(3).column(3).build()},
+                {Direction.NE, zeroRowAndColumnCoordinate(), false, 4, new CoordinateBuilder().row(4).column(4).build()},
+                {Direction.NE, NECoordinate(), true, 2, new CoordinateBuilder().row(2).column(2).build()},
+                {Direction.NE, SWCoordinate(), false, 0, new CoordinateBuilder().column(0).build()},
+                {Direction.NE, NWCoordinate(), false, -2, new CoordinateBuilder().row(-2).column(-2).build()},
+                {Direction.SE, SECoordinate(), true, 2, new CoordinateBuilder().row(-2).column(2).build()},
+                {Direction.SE, NWCoordinate(), false, 0, new CoordinateBuilder().column(0).build()},
+                {Direction.SE, SWCoordinate(), false, 2, new CoordinateBuilder().row(-2).column(2).build()},
+                {Direction.SW, SWCoordinate(), true, -2, new CoordinateBuilder().row(2).column(2).build()},
+                {Direction.SW, NWCoordinate(), false, 0, new CoordinateBuilder().column(0).build()},
+                {Direction.SW, SECoordinate(), false, 2, new CoordinateBuilder().row(-2).column(-2).build()},
+                {Direction.NW, NWCoordinate(), true, 2, new CoordinateBuilder().row(2).column(-2).build()},
+                {Direction.NW, SWCoordinate(), false, 0, new CoordinateBuilder().column(0).build()},
+                {Direction.NW, NECoordinate(), false, -2, new CoordinateBuilder().row(-2).column(2).build()}
         });
     }
 
@@ -55,6 +55,30 @@ public class DirectionTest {
     @Test
     public void testGetDistanceCoordinate() {
         assertEquals(expectedCoordinate, directionToTest.getDistanceCoordinate(distance));
+    }
+
+    private static Coordinate notEqualsRowAndColumnCoordinate() {
+        return new CoordinateBuilder().build();
+    }
+
+    private static Coordinate zeroRowAndColumnCoordinate() {
+        return new CoordinateBuilder().column(0).build();
+    }
+
+    private static Coordinate NECoordinate() {
+        return new CoordinateBuilder().row(7).column(7).build();
+    }
+
+    private static Coordinate SWCoordinate() {
+        return new CoordinateBuilder().row(-1).column(-1).build();
+    }
+
+    private static Coordinate NWCoordinate() {
+        return new CoordinateBuilder().row(2).column(-2).build();
+    }
+
+    private static Coordinate SECoordinate() {
+        return new CoordinateBuilder().row(-5).column(5).build();
     }
 
 }

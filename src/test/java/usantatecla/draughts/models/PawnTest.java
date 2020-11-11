@@ -20,33 +20,33 @@ public class PawnTest extends PieceTest {
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesNotAdvanceThenReturnNotAdvancedError() {
         assertEquals(Error.NOT_ADVANCED,
-                this.piece.isCorrectDiagonalMovement(1, 0, this.createSameRowCoordinates()));
+                this.piece.isCorrectDiagonalMovement(1, 0, createSameRowCoordinates()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceTooMuchThenReturnTooMuchError() {
         assertEquals(Error.TOO_MUCH_ADVANCED,
                 this.piece.isCorrectDiagonalMovement(0, 0,
-                        this.createOnDiagonalCoordinates(this.piece.getColor(), 3)));
+                        createOnDiagonalCoordinates(this.piece.getColor(), 3)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceWithoutEatingThenReturnWithoutEatingError() {
         assertEquals(Error.WITHOUT_EATING,
                 this.piece.isCorrectDiagonalMovement(2, 0,
-                        this.createOnDiagonalCoordinates(this.piece.getColor(), 2)));
+                        createOnDiagonalCoordinates(this.piece.getColor(), 2)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceThenReturnNullError() {
         assertNull(this.piece.isCorrectDiagonalMovement(1, 0,
-                this.createOnDiagonalCoordinates(this.piece.getColor(), 2)));
+                createOnDiagonalCoordinates(this.piece.getColor(), 2)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceEatingThenReturnNullError() {
         assertNull(this.piece.isCorrectDiagonalMovement(1, 0,
-                this.createOnDiagonalCoordinates(this.piece.getColor(), 1)));
+                createOnDiagonalCoordinates(this.piece.getColor(), 1)));
     }
 
 }

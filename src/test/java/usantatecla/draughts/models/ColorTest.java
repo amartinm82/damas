@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(Parameterized.class)
 public class ColorTest {
@@ -20,10 +19,10 @@ public class ColorTest {
     public int row;
 
     @Parameterized.Parameter(2)
-    public Coordinate coordinate;
+    public boolean expectedBoolean;
 
     @Parameterized.Parameter(3)
-    public boolean expectedBoolean;
+    public Coordinate coordinate;
 
     @Parameterized.Parameter(4)
     public Color expectedColor;
@@ -31,10 +30,10 @@ public class ColorTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Color.WHITE, 0, new CoordinateBuilder().column(2).build(), false, null},
-                {Color.WHITE, 5, new CoordinateBuilder().row(4).column(1).build(), true, null},
-                {Color.BLACK, 2, new CoordinateBuilder().row(4).column(1).build(), true, null},
-                {Color.BLACK, 3, new CoordinateBuilder().row(2).column(1).build(), false, Color.BLACK},
+                {Color.WHITE, 0, false, blackCoordinate(), null},
+                {Color.WHITE, 5, true, notInitialRowCoordinate(), null},
+                {Color.BLACK, 2, true, notInitialRowCoordinate(), null},
+                {Color.BLACK, 3, false, initialRowCoordinate(), Color.BLACK},
         });
     }
 
@@ -47,4 +46,17 @@ public class ColorTest {
     public void testGetInitialColor() {
         assertEquals(expectedColor, Color.getInitialColor(coordinate));
     }
+
+    private static Coordinate blackCoordinate() {
+        return new CoordinateBuilder().column(2).build();
+    }
+
+    private static Coordinate notInitialRowCoordinate() {
+        return new CoordinateBuilder().row(4).column(1).build();
+    }
+
+    private static Coordinate initialRowCoordinate() {
+        return new CoordinateBuilder().row(2).column(1).build();
+    }
+
 }
