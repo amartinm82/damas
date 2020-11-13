@@ -1,26 +1,26 @@
 package usantatecla.draughts.models;
 
-class CoordinateBuilder {
+public class CoordinateBuilder {
 
     private int row;
     private int column;
 
-    CoordinateBuilder() {
+    public CoordinateBuilder() {
         this.row = 0;
         this.column = Coordinate.getDimension() - 1;
     }
 
-    CoordinateBuilder row(int row) {
+    public CoordinateBuilder row(int row) {
         this.row = row;
         return this;
     }
 
-    CoordinateBuilder column(int column) {
+    public CoordinateBuilder column(int column) {
         this.column = column;
         return this;
     }
 
-    Coordinate build() {
+    public Coordinate build() {
         return new Coordinate(this.row, this.column);
     }
 

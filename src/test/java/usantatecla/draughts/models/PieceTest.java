@@ -148,7 +148,7 @@ public abstract class PieceTest {
         if (color == Color.WHITE) {
             Collections.reverse(coordinates);
         }
-        return (Coordinate[]) coordinates.toArray();
+        return coordinates.toArray(new Coordinate[2]);
     }
 
 }
