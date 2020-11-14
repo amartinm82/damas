@@ -1,35 +1,41 @@
 package usantatecla.draughts.views;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import usantatecla.draughts.controllers.InteractorController;
 import usantatecla.draughts.controllers.StartController;
-import usantatecla.draughts.models.Color;
 import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
-import usantatecla.draughts.utils.Console;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class GameViewTest {
 
-    @InjectMocks
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private GameView gameView;
-
-    @Mock
-    private Console console;
-
     private InteractorController interactorController;
 
     @Before
     public void before() {
         initMocks(this);
+        this.gameView = new GameView();
         this.interactorController = spy(new StartController(new Game(), new State()));
+        System.setOut(new PrintStream(this.outputStreamCaptor));
     }
+
+    @After
+    public void tearDown() {
+        System.setOut(this.standardOut);
+    }
+
 
     @Test(expected = AssertionError.class)
     public void testGivenGameViewWhenWriteWithNullControllerThenThrowsAssertionError() {
@@ -40,11 +46,15 @@ public class GameViewTest {
     public void testGivenGameViewWhenWriteWithControllerThenWriteBoard() {
         this.gameView.write(this.interactorController);
         verify(this.interactorController, times(Coordinate.getDimension() * (Coordinate.getDimension() + 1) + 1)).getDimension();
-        // empty coordinates in board
-        verify(this.console, times(42)).write(" ");
-        verify(this.console, times(12)).write(Color.WHITE.name());
-        verify(this.console, times(12)).write(Color.BLACK.name());
-        verify(this.console, times(2)).writeln();
-        verify(this.console, times(8)).writeln(anyString());
+        assertEquals("12345678\n" +
+                "1 n n n n1\n" +
+                "2n n n n 2\n" +
+                "3 n n n n3\n" +
+                "4        4\n" +
+                "5        5\n" +
+                "6b b b b 6\n" +
+                "7 b b b b7\n" +
+                "8b b b b 8\n" +
+                " 12345678", outputStreamCaptor.toString().trim());
     }
 }

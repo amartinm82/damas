@@ -75,8 +75,7 @@ public class PlayViewTest {
         when(this.console.readString(String.format(PROMPT, COLOR_VALUES[Color.WHITE.ordinal()]))).thenReturn(RIGHT_FORMAT);
         this.playView.interact(this.playController);
         verify(this.playController, times(1)).move(COORDINATES);
-        // to check GameView write method is called check if the call to getDimension method inside is done
-        verify(this.playController, times(1)).getDimension();
+        this.verifyGameViewWrite();
         verify(this.playController, times(1)).isBlocked();
         verify(this.console, never()).writeln(LOST_MESSAGE);
     }
@@ -88,9 +87,12 @@ public class PlayViewTest {
         when(this.playController.isBlocked()).thenReturn(true);
         this.playView.interact(this.playController);
         verify(this.playController, times(1)).move(COORDINATES);
-        // to check GameView write method is called check if the call to getDimension method inside is done
-        verify(this.playController, times(1)).getDimension();
+        this.verifyGameViewWrite();
         verify(this.console, times(1)).writeln(LOST_MESSAGE);
+    }
+
+    private void verifyGameViewWrite() {
+        verify(this.playController, times(1)).getDimension();
     }
 
 }

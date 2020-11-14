@@ -20,8 +20,11 @@ public class ResumeViewTest {
     @Mock
     private YesNoDialog yesNoDialog;
 
+    @Mock
+    private ResumeController resumeController;
+
     @Before
-    public void before(){
+    public void before() {
         initMocks(this);
     }
 
@@ -33,16 +36,14 @@ public class ResumeViewTest {
     @Test
     public void testGivenResumeViewWhenInteractWithResumeControllerAndYesNoDialogReadIsTrueThenCallResumeControllerResetMethod() {
         when(yesNoDialog.read(MESSAGE)).thenReturn(true);
-        ResumeController resumeController = mock(ResumeController.class);
-        this.resumeView.interact(resumeController);
-        verify(resumeController, times(1)).reset();
+        this.resumeView.interact(this.resumeController);
+        verify(this.resumeController, times(1)).reset();
     }
 
     @Test
     public void testGivenResumeViewWhenInteractWithResumeControllerAndYesNoDialogReadIsFalseThenCallResumeControllerNextMethod() {
-        ResumeController resumeController = mock(ResumeController.class);
-        this.resumeView.interact(resumeController);
-        verify(resumeController, times(1)).next();
+        this.resumeView.interact(this.resumeController);
+        verify(this.resumeController, times(1)).next();
     }
 
 }
