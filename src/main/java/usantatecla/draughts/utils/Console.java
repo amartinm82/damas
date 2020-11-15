@@ -24,20 +24,6 @@ public class Console {
 		return input;
 	}
 
-	public int readInt(String title) {
-		int input = 0;
-		boolean ok = false;
-		do {
-			try {
-				input = Integer.parseInt(this.readString(title));
-				ok = true;
-			} catch (NumberFormatException ex) {
-				this.writeError("entero");
-			}
-		} while (!ok);
-		return input;
-	}
-
 	public char readChar(String title) {
 		char charValue = ' ';
 		boolean ok = false;
