@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Álvaro Martín">
-<title>Damas</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -348,21 +347,10 @@ Derrota!!! No puedes mover tus fichas!!!
 </div>
 <h2 id="instalacion">Instalación</h2>
 <div class="sectionbody">
-<table class="tableblock frame-none grid-nonen stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top" rowspan="3"><div class="content"><div class="literalblock">
 <div class="content">
 <pre>mvn install</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div></div>
 </div>
 <h2 id="uso">Uso</h2>
 <div class="sectionbody">
@@ -384,21 +372,10 @@ Derrota!!! No puedes mover tus fichas!!!
 </div>
 <h2 id="tests">Ejecutar tests</h2>
 <div class="sectionbody">
-<table class="tableblock frame-none grid-nonen stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top" rowspan="3"><div class="content"><div class="literalblock">
 <div class="content">
 <pre>mvn test</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div></div>
 </div>
 <h2 id="autor">Autor</h2>
 <div class="content">
