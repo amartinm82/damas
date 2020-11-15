@@ -24,7 +24,7 @@ public abstract class PieceTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void testGivenAPieceWhenCheckIsCorrectMovementWithPairOutOfLimitsThenThrowAssertionError() {
+    public void testGivenAPieceWhenCheckIsCorrectMovementWithPairGreaterThanBetweenDiagonalPiecesSizeThenThrowAssertionError() {
         this.piece.isCorrectMovement(Collections.EMPTY_LIST, 2, createSameRowCoordinates());
     }
 

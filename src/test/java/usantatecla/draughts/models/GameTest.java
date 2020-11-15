@@ -146,10 +146,16 @@ public class GameTest {
     }
 
     private void checkMovementsAreUndo(Coordinate[] movementToUndoCoordinates) {
-        assertTrue(this.board.getPiece(this.origin) instanceof Pawn);
-        assertNull(this.board.getPiece(movementToUndoCoordinates[3]));
-        assertTrue(this.board.getPiece(movementToUndoCoordinates[1]) instanceof Pawn);
-        assertTrue(this.board.getPiece(movementToUndoCoordinates[2]) instanceof Draught);
+        assertTrue(this.game.getPiece(this.origin) instanceof Pawn);
+        assertNull(this.game.getPiece(movementToUndoCoordinates[3]));
+        assertTrue(this.game.getPiece(new CoordinateBuilder()
+                .row(movementToUndoCoordinates[1].getRow() + 1)
+                .column(movementToUndoCoordinates[1].getColumn() - 1)
+                .build()) instanceof Pawn);
+        assertTrue(this.game.getPiece(new CoordinateBuilder()
+                .row(movementToUndoCoordinates[2].getRow() + 1)
+                .column(movementToUndoCoordinates[2].getColumn() - 1)
+                .build()) instanceof Draught);
     }
 
     private void setBoardToBlockWhitePieces() {

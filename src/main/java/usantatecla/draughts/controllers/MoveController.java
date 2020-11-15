@@ -14,6 +14,7 @@ class MoveController extends Controller {
     }
 
     public Error move(Coordinate... coordinates) {
+        assert coordinates != null;
         assert coordinates.length >= MoveController.MINIMUM_COORDINATES;
         for (Coordinate coordinate : coordinates)
             assert coordinate != null;

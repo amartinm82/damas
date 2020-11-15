@@ -15,7 +15,7 @@ public class BoardTest {
     public void before() {
         this.board = new Board();
         this.origin = new CoordinateBuilder().build();
-        this.piece = new Pawn(Color.BLACK);
+        this.piece = blackPawn();
         this.board.put(origin, piece);
     }
 
@@ -44,10 +44,11 @@ public class BoardTest {
         this.board.put(outOfBoardLimitsCoordinate(), null);
     }
 
-    @Test(expected = AssertionError.class)
-    public void testGivenABoardWhenPutPieceInCoordinateWhereAlreadyThereIsAPieceThenThrowsAssertionError() {
-        Piece coordinatePiece = new Pawn(Color.WHITE);
-        this.board.put(origin, coordinatePiece);
+    @Test
+    public void testGivenABoardWhenPutPieceInCoordinateWhereAlreadyThereIsAPieceThenOverridePiece() {
+        assertEquals(blackPawn(), this.board.getPiece(this.origin));
+        this.board.put(origin, whitePawn());
+        assertEquals(whitePawn(), this.board.getPiece(this.origin));
     }
 
     @Test
@@ -97,18 +98,9 @@ public class BoardTest {
 
     @Test
     public void testGivenABoardWhenGetBetweenDiagonalPiecesWithPiecesOnDiagonalThenReturnPiecesList() {
-        int[] rows = {0, 1, 2};
-        int[] columns = {7, 6, 5};
-        Piece blackPawn = new Pawn(Color.BLACK);
-        Piece whitePawn = new Pawn(Color.WHITE);
-        for (int i = 0; i < rows.length; i++) {
-            this.board.put(new CoordinateBuilder().row(rows[i]).column(columns[i]).build(), blackPawn);
-            this.board.put(new CoordinateBuilder().row(columns[i]).column(rows[i]).build(), whitePawn);
-        }
-        assertArrayEquals(new Piece[]{blackPawn, blackPawn, whitePawn, whitePawn},
-                this.board.getBetweenDiagonalPieces(
-                        this.origin,
-                        new CoordinateBuilder().row(7).column(0).build()).toArray());
+        this.fillBoard();
+        assertArrayEquals(new Piece[]{blackPawn(), blackPawn(), whitePawn(), whitePawn()},
+                this.board.getBetweenDiagonalPieces(this.origin, oppositeCornerCoordinate()).toArray());
     }
 
     @Test
@@ -129,6 +121,28 @@ public class BoardTest {
     @Test
     public void testGivenABoardWhenIsEmptyWithNotEmptyCoordinateThenReturnFalse() {
         assertFalse(this.board.isEmpty(this.origin));
+    }
+
+    private static Pawn whitePawn() {
+        return new Pawn(Color.WHITE);
+    }
+
+    private static Pawn blackPawn() {
+        return new Pawn(Color.BLACK);
+    }
+
+    private void fillBoard() {
+        int[] rows = {0, 1, 2};
+        int[] columns = {7, 6, 5};
+        this.board = new Board();
+        for (int i = 0; i < rows.length; i++) {
+            this.board.put(new CoordinateBuilder().row(rows[i]).column(columns[i]).build(), blackPawn());
+            this.board.put(new CoordinateBuilder().row(columns[i]).column(rows[i]).build(), whitePawn());
+        }
+    }
+
+    private static Coordinate oppositeCornerCoordinate() {
+        return new CoordinateBuilder().row(7).column(0).build();
     }
 
     private static Coordinate outOfBoardLimitsCoordinate() {

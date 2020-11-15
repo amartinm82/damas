@@ -15,12 +15,25 @@ class Board {
                 this.pieces[i][j] = null;
     }
 
+    Board copyBoard() {
+        Board boardCopy = new Board();
+        for (int i = 0; i < Coordinate.getDimension(); i++)
+            for (int j = 0; j < Coordinate.getDimension(); j++)
+                boardCopy.pieces[i][j] = this.pieces[i][j];
+        return boardCopy;
+    }
+
     Piece getPiece(Coordinate coordinate) {
         assert coordinate != null;
+        assert coordinate.getRow() > -1 && coordinate.getRow() < Coordinate.getDimension();
+        assert coordinate.getColumn() > -1 && coordinate.getColumn() < Coordinate.getDimension();
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
     void put(Coordinate coordinate, Piece piece) {
+        assert coordinate != null;
+        assert coordinate.getRow() > -1 && coordinate.getRow() < Coordinate.getDimension();
+        assert coordinate.getColumn() > -1 && coordinate.getColumn() < Coordinate.getDimension();
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
 
@@ -33,11 +46,13 @@ class Board {
 
     void move(Coordinate origin, Coordinate target) {
         assert this.getPiece(origin) != null;
+        assert this.getPiece(target) == null;
         this.put(target, this.remove(origin));
     }
 
     List<Piece> getBetweenDiagonalPieces(Coordinate origin, Coordinate target) {
-        List<Piece> betweenDiagonalPieces = new ArrayList<Piece>();
+        assert origin != null;
+        List<Piece> betweenDiagonalPieces = new ArrayList<>();
         if (origin.isOnDiagonal(target))
             for (Coordinate coordinate : origin.getBetweenDiagonalCoordinates(target)) {
                 Piece piece = this.getPiece(coordinate);
