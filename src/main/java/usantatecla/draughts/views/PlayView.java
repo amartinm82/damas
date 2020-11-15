@@ -1,22 +1,21 @@
 package usantatecla.draughts.views;
 
+import usantatecla.draughts.controllers.PlayController;
+import usantatecla.draughts.models.Color;
+import usantatecla.draughts.models.Coordinate;
+import usantatecla.draughts.models.Error;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import usantatecla.draughts.controllers.PlayController;
-import usantatecla.draughts.models.Error;
-import usantatecla.draughts.models.Color;
-import usantatecla.draughts.models.Coordinate;
-
 class PlayView extends SubView {
-    
+
     private static final String COLOR_PARAM = "#color";
-    private static final String[] COLOR_VALUES = { "blancas", "negras" };
+    private static final String[] COLOR_VALUES = {"blancas", "negras"};
     private static final String PROMPT = "Mueven las " + PlayView.COLOR_PARAM + ": ";
     private static final String CANCEL_FORMAT = "-1";
     private static final String MOVEMENT_FORMAT = "[1-8]{2}(\\.[1-8]{2}){1,2}";
-    private static final String ERROR_MESSAGE = "Error!!! Formato incorrecto";
     private static final String LOST_MESSAGE = "Derrota!!! No puedes mover tus fichas!!!";
     private String string;
 
@@ -34,18 +33,22 @@ class PlayView extends SubView {
                 playController.cancel();
             else if (!this.isMoveFormat()) {
                 error = Error.BAD_FORMAT;
-                this.writeError();
+                this.writeError(error);
             } else {
                 error = playController.move(this.getCoordinates());
-                new GameView().write(playController);
-                if (error == null && playController.isBlocked())
-                    this.writeLost();
+                if (error != null)
+                    new ErrorView().write(error);
+                else {
+                    new GameView().write(playController);
+                    if (playController.isBlocked())
+                        this.writeLost();
+                }
             }
         } while (error != null);
     }
 
     private String read(Color color) {
-        final String titleColor = PlayView.PROMPT.replace(PlayView.COLOR_PARAM ,PlayView.COLOR_VALUES[color.ordinal()]);
+        final String titleColor = PlayView.PROMPT.replace(PlayView.COLOR_PARAM, PlayView.COLOR_VALUES[color.ordinal()]);
         return this.console.readString(titleColor);
     }
 
@@ -57,21 +60,21 @@ class PlayView extends SubView {
         return Pattern.compile(PlayView.MOVEMENT_FORMAT).matcher(string).find();
     }
 
-    private void writeError(){
-        this.console.writeln(PlayView.ERROR_MESSAGE);
+    private void writeError(Error error) {
+        new ErrorView().write(error);
     }
 
     private Coordinate[] getCoordinates() {
         assert this.isMoveFormat();
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-        while (string.length() > 0){
+        while (string.length() > 0) {
             coordinateList.add(Coordinate.getInstance(string.substring(0, 2)));
             string = string.substring(2, string.length());
             if (string.length() > 0 && string.charAt(0) == '.')
                 string = string.substring(1, string.length());
         }
         Coordinate[] coordinates = new Coordinate[coordinateList.size()];
-        for(int i=0; i< coordinates.length; i++){
+        for (int i = 0; i < coordinates.length; i++) {
             coordinates[i] = coordinateList.get(i);
         }
         return coordinates;
