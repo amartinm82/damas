@@ -351,32 +351,18 @@ Derrota!!! No puedes mover tus fichas!!!
 <pre>mvn install</pre>
 </div>
 </div></div>
-</div>
 <h2 id="uso">Uso</h2>
 <div class="sectionbody">
-<table class="tableblock frame-none grid-nonen stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top" rowspan="3"><div class="content"><div class="literalblock">
 <div class="content">
 <pre>mvn package<br/>java -jar target/draughts-1.0-SNAPSHOT.jar</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
+</div></div>
 <h2 id="tests">Ejecutar tests</h2>
 <div class="sectionbody">
 <div class="content">
 <pre>mvn test</pre>
 </div>
 </div></div>
-</div>
 <h2 id="autor">Autor</h2>
 <div class="content">
 👤 <strong>Álvaro Martín Martín</strong>
@@ -385,16 +371,15 @@ Derrota!!! No puedes mover tus fichas!!!
 </div>
 <h2 id="nota-practica">Nota de la práctica</h2>
 <div class="content">
-👤 **Álvaro Martín Martín**
+👤 <strong>Álvaro Martín Martín</strong>
 
 * grade: 9
 * hours: 12
 
-👤 **Luis Fernández**
+👤 <strong>Luis Fernández</strong>
 
-* grade: 9
-</div>
-<div class="content">
+* grade: 9<br/>
+
 Note that you should have to [install JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Maven](https://maven.apache.org/install.html) as prerequisite.
 </div>
 <div id="footer">
