@@ -373,12 +373,15 @@ Derrota!!! No puedes mover tus fichas!!!
 <div class="content">
 👤 <strong>Álvaro Martín Martín</strong>
 
-* grade: 9
-* hours: 12
+* Nota: 9
+* Horas: 24
+* Motivos de la nota: pese a que ya tenía experiencia en la realización de tests, he aprendido a identificar algunos errores que cometía y a tener un nuevo punto de vista respecto a éstos, aprendiendo que deben de ser mucho más legibles ya que pueden llegar a funcionar como documentación de mi código.
 
 👤 <strong>Luis Fernández</strong>
 
-* grade: 9<br/>
+* Nota: 9<br/>
+* Motivos de la nota: como siempre Luis ha expuesto el tema de una forma amena consiguiendo captar totalmente mi atención, e incluso me ha enseñado cosas que desconocía para la realización de los tests. Además se ha esforzado realizando muchos ejemplos para el absoluto entendimiento de lo expuesto en clase por parte de los alumnos, y en todo momento a estado atento para que no tuviésemos ninguna duda y dispusiésemos del material necesario.
+
 
 Note that you should have to [install JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Maven](https://maven.apache.org/install.html) as prerequisite.
 </div>
