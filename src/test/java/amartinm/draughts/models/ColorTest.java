@@ -30,9 +30,9 @@ public class ColorTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Color.WHITE, 0, false, blackCoordinate(), null},
-                {Color.WHITE, 5, true, notInitialRowCoordinate(), null},
-                {Color.BLACK, 2, true, notInitialRowCoordinate(), null},
+                {Color.WHITE, 0, false, blackCoordinate(), Color.NULL},
+                {Color.WHITE, 5, true, notInitialRowCoordinate(), Color.NULL},
+                {Color.BLACK, 2, true, notInitialRowCoordinate(), Color.NULL},
                 {Color.BLACK, 3, false, initialRowCoordinate(), Color.BLACK},
         });
     }

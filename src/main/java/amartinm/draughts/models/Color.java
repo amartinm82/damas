@@ -2,9 +2,14 @@ package amartinm.draughts.models;
 
 public enum Color {
     WHITE,
-    BLACK;
+    BLACK,
+    NULL;
 
     private final int[] LIMITS = new int[]{5, 2};
+
+    public boolean isNull() {
+        return this.equals(Color.NULL);
+    }
 
     boolean isInitialRow(final int row){
         switch(this){
@@ -21,7 +26,7 @@ public enum Color {
             for(Color color : Color.values())
                 if (color.isInitialRow(coordinate.getRow()))
                     return color;
-        return null;
+        return NULL;
     }
-	
+
 }
