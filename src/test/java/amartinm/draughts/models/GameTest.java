@@ -50,6 +50,11 @@ public class GameTest {
     }
 
     @Test
+    public void testGivenAGameWhenMoveWithCoordinatesNotOnDiagonalThenReturnNotDiagonalError() {
+        assertEquals(Error.NOT_DIAGONAL, this.game.move(this.notOnDiagonalMovementCoordinates()));
+    }
+
+    @Test
     public void testGivenAGameWhenMoveToNotEmptyCoordinateThenReturnNotEmptyTargetError() {
         Coordinate targetCoordinate = this.onDiagonalNECoordinate();
         this.board.put(targetCoordinate, new Pawn(Color.BLACK));

@@ -20,52 +20,50 @@ public abstract class PieceTest {
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithNullCoordinatesThenThrowAssertionError() {
-        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, null);
+        this.piece.isCorrectMovement(Collections.EMPTY_LIST, new MovementBuilder().build());
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithPairGreaterThanBetweenDiagonalPiecesSizeThenThrowAssertionError() {
-        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 2, createSameRowCoordinates());
+        this.piece.isCorrectMovement(Collections.EMPTY_LIST,
+                new MovementBuilder().pair(2).coordinates(createSameRowCoordinates()).build());
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithFirstCoordinateIsNullThenThrowAssertionError() {
-        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, new Coordinate[]{null});
+        this.piece.isCorrectMovement(Collections.EMPTY_LIST,
+                new MovementBuilder().coordinates(new Coordinate[]{null}).build());
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithSecondCoordinateIsNullThenThrowAssertionError() {
-        this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, new Coordinate[]{new CoordinateBuilder().build(), null});
-    }
-
-    @Test
-    public void testGivenAPieceWhenCheckIsCorrectMovementWithCoordinatesNotOnDiagonalThenReturnNotDiagonalError() {
-        assertEquals(Error.NOT_DIAGONAL,
-                this.piece.isCorrectMovement(Collections.EMPTY_LIST, 0, createSameRowCoordinates()));
+        this.piece.isCorrectMovement(Collections.EMPTY_LIST,
+                new MovementBuilder().coordinates(new Coordinate[]{new CoordinateBuilder().build(), null}).build());
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenAPieceWhenCheckIsCorrectMovementWithNullDiagonalPiecesThenThrowsAssertionError() {
-        this.piece.isCorrectMovement(null, 0, createOnDiagonalCoordinates(Color.BLACK, 1));
+        this.piece.isCorrectMovement(null,
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(Color.BLACK, 1)).build());
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithEatingColleaguePiecesThenReturnColleagueEatingError() {
         assertEquals(Error.COLLEAGUE_EATING,
-                this.piece.isCorrectMovement(Collections.singletonList(this.createPiece(this.piece.getColor())), 0,
-                        createOnDiagonalCoordinates(this.piece.getColor(), 1)));
+                this.piece.isCorrectMovement(Collections.singletonList(this.createPiece(this.piece.getColor())),
+                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 1)).build()));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithCorrectMovementThenReturnNull() {
-        assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.EMPTY_LIST, 0,
-                createOnDiagonalCoordinates(Color.BLACK, 1)));
+        assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.EMPTY_LIST,
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(Color.BLACK, 1)).build()));
     }
 
     @Test
     public void testGivenAPieceWhenCheckIsCorrectMovementWithCorrectEatingMovementThenReturnNull() {
-        assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.singletonList(this.createPiece(Color.WHITE)), 0,
-                createOnDiagonalCoordinates(Color.BLACK, 2)));
+        assertNull(this.createPiece(Color.BLACK).isCorrectMovement(Collections.singletonList(this.createPiece(Color.WHITE)),
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(Color.BLACK, 2)).build()));
     }
 
     @Test(expected = AssertionError.class)

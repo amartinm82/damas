@@ -15,14 +15,6 @@ class Board {
                 this.pieces[i][j] = null;
     }
 
-    Board copyBoard() {
-        Board boardCopy = new Board();
-        for (int i = 0; i < Coordinate.getDimension(); i++)
-            for (int j = 0; j < Coordinate.getDimension(); j++)
-                boardCopy.pieces[i][j] = this.pieces[i][j];
-        return boardCopy;
-    }
-
     Piece getPiece(Coordinate coordinate) {
         assert coordinate != null;
         assert coordinate.getRow() > -1 && coordinate.getRow() < Coordinate.getDimension();

@@ -1,21 +1,20 @@
 package amartinm.draughts.views;
 
+import amartinm.draughts.controllers.PlayController;
+import amartinm.draughts.models.Color;
+import amartinm.draughts.models.Coordinate;
 import amartinm.draughts.models.CoordinateBuilder;
+import amartinm.draughts.models.Error;
+import amartinm.draughts.utils.Console;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import amartinm.draughts.controllers.PlayController;
-import amartinm.draughts.models.Color;
-import amartinm.draughts.models.Coordinate;
-import amartinm.draughts.utils.Console;
-import amartinm.draughts.models.Error;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;

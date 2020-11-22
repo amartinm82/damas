@@ -20,14 +20,14 @@ public class DraughtTest extends PieceTest {
     @Test
     public void testGivenADraughtWhenCheckIsCorrectDiagonalMovementAndDoesEatTooMuchPiecesThenReturnTooMuchEatingError() {
         assertEquals(Error.TOO_MUCH_EATINGS,
-                this.piece.isCorrectDiagonalMovement(2, 0,
-                        createOnDiagonalCoordinates(this.piece.getColor(), 2)));
+                this.piece.isCorrectDiagonalMovement(2,
+                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 2)).build()));
     }
 
     @Test
     public void testGivenADraughtWhenCheckIsCorrectDiagonalMovementAndItIsThenReturnNullError() {
-        assertNull(this.piece.isCorrectDiagonalMovement(1, 0,
-                createOnDiagonalCoordinates(this.piece.getColor(), 7)));
+        assertNull(this.piece.isCorrectDiagonalMovement(1,
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 7)).build()));
     }
 
 }

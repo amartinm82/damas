@@ -20,33 +20,34 @@ public class PawnTest extends PieceTest {
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesNotAdvanceThenReturnNotAdvancedError() {
         assertEquals(Error.NOT_ADVANCED,
-                this.piece.isCorrectDiagonalMovement(1, 0, createSameRowCoordinates()));
+                this.piece.isCorrectDiagonalMovement(1,
+                        new MovementBuilder().coordinates(createSameRowCoordinates()).build()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceTooMuchThenReturnTooMuchError() {
         assertEquals(Error.TOO_MUCH_ADVANCED,
-                this.piece.isCorrectDiagonalMovement(0, 0,
-                        createOnDiagonalCoordinates(this.piece.getColor(), 3)));
+                this.piece.isCorrectDiagonalMovement(0,
+                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 3)).build()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceWithoutEatingThenReturnWithoutEatingError() {
         assertEquals(Error.WITHOUT_EATING,
-                this.piece.isCorrectDiagonalMovement(2, 0,
-                        createOnDiagonalCoordinates(this.piece.getColor(), 2)));
+                this.piece.isCorrectDiagonalMovement(2,
+                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 2)).build()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceThenReturnNullError() {
-        assertNull(this.piece.isCorrectDiagonalMovement(1, 0,
-                createOnDiagonalCoordinates(this.piece.getColor(), 2)));
+        assertNull(this.piece.isCorrectDiagonalMovement(1,
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 2)).build()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceEatingThenReturnNullError() {
-        assertNull(this.piece.isCorrectDiagonalMovement(1, 0,
-                createOnDiagonalCoordinates(this.piece.getColor(), 1)));
+        assertNull(this.piece.isCorrectDiagonalMovement(1,
+                new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 1)).build()));
     }
 
 }
