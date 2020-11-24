@@ -33,6 +33,10 @@ public class Movement {
         return this.coordinatesToRemove;
     }
 
+    public boolean isFirstJump() {
+        return pair == 0;
+    }
+
     Coordinate getCurrentCoordinate() {
         return this.coordinates[pair];
     }
@@ -58,8 +62,12 @@ public class Movement {
         this.coordinatesToRemove.add(coordinate);
     }
 
+    boolean isLastJump() {
+        return this.getNextCoordinate().equals(this.coordinates[this.coordinates.length - 1]);
+    }
+
     boolean areCheckedAllCoordinates() {
-        return pair == this.coordinates.length - 1;
+        return this.pair == this.coordinates.length - 1;
     }
 
     Error isCorrect(Board board, Turn turn) {

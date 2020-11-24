@@ -18,7 +18,7 @@ public class CorrectGlobalMovementChecker extends BaseMovementChecker {
         if (forRemoving != null) {
             movement.addCoordinateToRemove(forRemoving);
         }
-        if (movement.getCoordinates().length > 2 && movement.getCoordinates().length > movement.getCoordinatesToRemove().size() + 1)
+        if (movement.isLastJump() && movement.getCoordinates().length > 2 && movement.getCoordinates().length > movement.getCoordinatesToRemove().size() + 1)
             return Error.TOO_MUCH_JUMPS;
         return super.check(board, turn, movement);
     }

@@ -3,6 +3,10 @@ package amartinm.draughts.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class GameTest {
@@ -63,11 +67,6 @@ public class GameTest {
     }
 
     @Test
-    public void testGivenAGameWhenMoveNotOnDiagonalThenReturnNotDiagonalError() {
-        assertEquals(Error.NOT_DIAGONAL, this.game.move(this.notOnDiagonalMovementCoordinates()));
-    }
-
-    @Test
     public void testGivenAGameWhenMoveEatingAColleagueThenReturnColleagueEatingError() {
         Coordinate[] coordinates = this.setBoardToEatAColleague();
         assertEquals(Error.COLLEAGUE_EATING, this.game.move(coordinates));
@@ -92,6 +91,13 @@ public class GameTest {
         Coordinate[] movementToUndoCoordinates = this.prepareBoardToMoveWithMovementsToUndo();
         assertEquals(Error.TOO_MUCH_JUMPS, this.game.move(movementToUndoCoordinates));
         this.checkMovementsAreUndo(movementToUndoCoordinates);
+    }
+
+    @Test
+    public void testGivenAGameWhenMoveToEatSeveralPiecesThenRemoveEatenPieces() {
+        Coordinate[] movementToEatSeveralPiecesCoordinates = this.prepareBoardToMoveWithSeveralPiecesToEat();
+        assertNull(this.game.move(movementToEatSeveralPiecesCoordinates));
+        this.checkPiecesAreEaten(movementToEatSeveralPiecesCoordinates);
     }
 
     @Test
@@ -137,17 +143,38 @@ public class GameTest {
         return new Coordinate[]{previousWhiteLimitCoordinate, whiteLimitCoordinate};
     }
 
-    private Coordinate[] prepareBoardToMoveWithMovementsToUndo() {
+    private Coordinate[] prepareBoardToMoveWithSeveralPiecesToEat() {
         Coordinate secondCoordinate = new CoordinateBuilder().row(3).column(4).build();
         Coordinate thirdCoordinate = new CoordinateBuilder().row(1).column(6).build();
-        Coordinate targetCoordinate = new CoordinateBuilder().build();
 
         Coordinate firstOppositePieceCoordinate = new CoordinateBuilder().row(4).column(3).build();
         Coordinate secondOppositePieceCoordinate = new CoordinateBuilder().row(2).column(5).build();
         this.board.put(firstOppositePieceCoordinate, new Pawn(Color.BLACK));
         this.board.put(secondOppositePieceCoordinate, new Draught(Color.BLACK));
 
-        return new Coordinate[]{this.origin, secondCoordinate, thirdCoordinate, targetCoordinate};
+        return new Coordinate[]{this.origin, secondCoordinate, thirdCoordinate};
+    }
+
+    private void checkPiecesAreEaten(Coordinate[] movementToEatSeveralPiecesUndoCoordinates) {
+        assertNull(this.game.getPiece(this.origin));
+        assertNull(this.game.getPiece(movementToEatSeveralPiecesUndoCoordinates[1]));
+        Piece piece = this.game.getPiece(movementToEatSeveralPiecesUndoCoordinates[2]);
+        assertTrue(piece instanceof Pawn && Color.WHITE.equals(piece.getColor()));
+        assertNull(this.game.getPiece(new CoordinateBuilder()
+                .row(movementToEatSeveralPiecesUndoCoordinates[1].getRow() + 1)
+                .column(movementToEatSeveralPiecesUndoCoordinates[1].getColumn() - 1)
+                .build()));
+        assertNull(this.game.getPiece(new CoordinateBuilder()
+                .row(movementToEatSeveralPiecesUndoCoordinates[2].getRow() + 1)
+                .column(movementToEatSeveralPiecesUndoCoordinates[2].getColumn() - 1)
+                .build()));
+    }
+
+    private Coordinate[] prepareBoardToMoveWithMovementsToUndo() {
+        List<Coordinate> coordinatesWithPiecesToEat = new ArrayList<>(Arrays.asList(this.prepareBoardToMoveWithSeveralPiecesToEat()));
+        coordinatesWithPiecesToEat.add(new CoordinateBuilder().build());
+
+        return coordinatesWithPiecesToEat.toArray(new Coordinate[coordinatesWithPiecesToEat.size()]);
     }
 
     private void checkMovementsAreUndo(Coordinate[] movementToUndoCoordinates) {
