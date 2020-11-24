@@ -66,7 +66,7 @@ public class Movement {
         return this.getNextCoordinate().equals(this.coordinates[this.coordinates.length - 1]);
     }
 
-    boolean areCheckedAllCoordinates() {
+    private boolean areCheckedAllCoordinates() {
         return this.pair == this.coordinates.length - 1;
     }
 
