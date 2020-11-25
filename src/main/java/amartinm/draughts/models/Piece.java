@@ -12,15 +12,19 @@ public abstract class Piece {
         this.color = color;
     }
 
-    Error isCorrectMovement(List<Piece> betweenDiagonalPieces, Movement movement) {
+    Error isCorrectMovement(List<Piece> betweenDiagonalPieces, int pair, Coordinate[] coordinates) {
         assert betweenDiagonalPieces != null;
+        assert coordinates != null;
+        assert pair > -1 && pair < coordinates.length;
+        assert coordinates[pair] != null;
+        assert coordinates[pair + 1] != null;
         for (Piece piece : betweenDiagonalPieces)
             if (this.color == piece.getColor())
                 return Error.COLLEAGUE_EATING;
-        return this.isCorrectDiagonalMovement(betweenDiagonalPieces.size(), movement);
+        return this.isCorrectDiagonalMovement(betweenDiagonalPieces.size(), pair, coordinates);
     }
 
-    abstract Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, Movement movement);
+    abstract Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, int pair, Coordinate[] coordinates);
 
     boolean isLimit(Coordinate coordinate) {
         assert coordinate != null;

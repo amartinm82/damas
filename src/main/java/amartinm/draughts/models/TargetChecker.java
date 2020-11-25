@@ -11,10 +11,10 @@ public class TargetChecker extends BaseMovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
-        if (!board.isEmpty(movement.getNextCoordinate()))
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
+        if (!board.isEmpty(coordinates[pair + 1]))
             return Error.NOT_EMPTY_TARGET;
-        return super.check(board, turn, movement);
+        return super.check(board, turn, pair, coordinates);
     }
 
 }

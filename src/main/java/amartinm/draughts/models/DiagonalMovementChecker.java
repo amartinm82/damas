@@ -11,10 +11,10 @@ public class DiagonalMovementChecker extends BaseMovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
-        if (!movement.getCurrentCoordinate().isOnDiagonal(movement.getNextCoordinate()))
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
+        if (!coordinates[pair].isOnDiagonal(coordinates[pair + 1]))
             return Error.NOT_DIAGONAL;
-        return super.check(board, turn, movement);
+        return super.check(board, turn, pair, coordinates);
     }
 
 }

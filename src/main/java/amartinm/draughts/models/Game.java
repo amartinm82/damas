@@ -38,10 +38,10 @@ public class Game {
         Movement movement = new Movement(coordinates);
         Error error = movement.isCorrect(board, turn);
         if (error == null) {
-            this.board.move(movement.getFirstCoordinate(), movement.getLastCoordinate());
+            this.board.move(coordinates[0], coordinates[coordinates.length - 1]);
             this.removePieces(movement.getCoordinatesToRemove());
-            if (this.hasReachLimit(movement.getLastCoordinate())) {
-                this.convertToDraught(movement.getLastCoordinate());
+            if (this.hasReachLimit(coordinates[coordinates.length - 1])) {
+                this.convertToDraught(coordinates[coordinates.length - 1]);
             }
             this.turn.change();
         }

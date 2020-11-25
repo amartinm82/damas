@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Movement {
 
-    private int pair;
     private Coordinate[] coordinates;
     private List<Coordinate> coordinatesToRemove;
     private MovementChecker movementChecker;
@@ -25,59 +24,35 @@ public class Movement {
         this.movementChecker = new OriginChecker(pieceChecker);
     }
 
-    public Coordinate[] getCoordinates() {
-        return this.coordinates;
-    }
-
     public List<Coordinate> getCoordinatesToRemove() {
         return this.coordinatesToRemove;
     }
 
-    public boolean isFirstJump() {
-        return pair == 0;
-    }
-
-    Coordinate getCurrentCoordinate() {
-        return this.coordinates[pair];
-    }
-
-    Coordinate getNextCoordinate() {
-        return this.coordinates[pair + 1];
-    }
-
-    void next() {
-        assert this.pair < coordinates.length - 1;
-        this.pair++;
-    }
-
-    Coordinate getFirstCoordinate() {
-        return this.coordinates[0];
-    }
-
-    Coordinate getLastCoordinate() {
-        return this.coordinates[this.coordinates.length - 1];
-    }
-
-    void addCoordinateToRemove(Coordinate coordinate) {
-        this.coordinatesToRemove.add(coordinate);
-    }
-
-    boolean isLastJump() {
-        return this.getNextCoordinate().equals(this.coordinates[this.coordinates.length - 1]);
-    }
-
-    private boolean areCheckedAllCoordinates() {
-        return this.pair == this.coordinates.length - 1;
-    }
-
     Error isCorrect(Board board, Turn turn) {
         Error error;
+        int pair = 0;
         do {
-            error = this.movementChecker.check(board, turn, this);
+            error = this.movementChecker.check(board, turn, pair, this.coordinates);
             if (error != null)
                 return error;
-            this.next();
-        } while (!this.areCheckedAllCoordinates());
+            Coordinate forRemoving = this.getBetweenDiagonalPiece(board, pair);
+            if (forRemoving != null) {
+                this.coordinatesToRemove.add(forRemoving);
+            }
+            pair++;
+        } while (pair < this.coordinates.length - 1);
+        return null;
+    }
+
+    private Coordinate getBetweenDiagonalPiece(Board board, int pair) {
+        assert this.coordinates[pair].isOnDiagonal(this.coordinates[pair + 1]);
+        List<Coordinate> betweenCoordinates = this.coordinates[pair].getBetweenDiagonalCoordinates(this.coordinates[pair + 1]);
+        if (betweenCoordinates.isEmpty())
+            return null;
+        for (Coordinate coordinate : betweenCoordinates) {
+            if (board.getPiece(coordinate) != null)
+                return coordinate;
+        }
         return null;
     }
 

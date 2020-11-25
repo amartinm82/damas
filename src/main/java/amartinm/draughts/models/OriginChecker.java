@@ -11,10 +11,10 @@ public class OriginChecker extends BaseMovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
-        if (movement.isFirstJump() && board.isEmpty(movement.getCurrentCoordinate()))
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
+        if (pair == 0 && board.isEmpty(coordinates[pair]))
             return Error.EMPTY_ORIGIN;
-        return super.check(board, turn, movement);
+        return super.check(board, turn, pair, coordinates);
     }
 
 }

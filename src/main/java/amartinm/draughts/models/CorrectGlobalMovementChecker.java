@@ -1,8 +1,8 @@
 package amartinm.draughts.models;
 
-import java.util.List;
-
 public class CorrectGlobalMovementChecker extends BaseMovementChecker {
+
+    private int piecesToEat;
 
     public CorrectGlobalMovementChecker() {
         super();
@@ -13,27 +13,13 @@ public class CorrectGlobalMovementChecker extends BaseMovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
-        Coordinate forRemoving = this.getBetweenDiagonalPiece(board, movement);
-        if (forRemoving != null) {
-            movement.addCoordinateToRemove(forRemoving);
-        }
-        if (movement.isLastJump() && movement.getCoordinates().length > 2 && movement.getCoordinates().length > movement.getCoordinatesToRemove().size() + 1)
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
+        this.piecesToEat += board.getBetweenDiagonalPieces(coordinates[pair], coordinates[pair + 1]).size();
+        if (pair + 1 == coordinates.length - 1
+                && coordinates.length > 2
+                && coordinates.length > this.piecesToEat + 1)
             return Error.TOO_MUCH_JUMPS;
-        return super.check(board, turn, movement);
+        return super.check(board, turn, pair, coordinates);
     }
-
-    private Coordinate getBetweenDiagonalPiece(Board board, Movement movement) {
-        assert movement.getCurrentCoordinate().isOnDiagonal(movement.getNextCoordinate());
-        List<Coordinate> betweenCoordinates = movement.getCurrentCoordinate().getBetweenDiagonalCoordinates(movement.getNextCoordinate());
-        if (betweenCoordinates.isEmpty())
-            return null;
-        for (Coordinate coordinate : betweenCoordinates) {
-            if (board.getPiece(coordinate) != null)
-                return coordinate;
-        }
-        return null;
-    }
-
 
 }

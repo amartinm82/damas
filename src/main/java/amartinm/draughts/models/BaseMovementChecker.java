@@ -13,9 +13,9 @@ public class BaseMovementChecker implements MovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
         if (next != null) {
-            return next.check(board, turn, movement);
+            return next.check(board, turn, pair, coordinates);
         }
         return null;
     }

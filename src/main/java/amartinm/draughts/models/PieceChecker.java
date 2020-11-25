@@ -11,10 +11,10 @@ public class PieceChecker extends BaseMovementChecker {
     }
 
     @Override
-    public Error check(Board board, Turn turn, Movement movement) {
-        if (movement.isFirstJump() && turn.getOppositeColor() == board.getColor(movement.getCurrentCoordinate()))
+    public Error check(Board board, Turn turn, int pair, Coordinate[] coordinates) {
+        if (pair == 0 && turn.getOppositeColor() == board.getColor(coordinates[pair]))
             return Error.OPPOSITE_PIECE;
-        return super.check(board, turn, movement);
+        return super.check(board, turn, pair, coordinates);
     }
 
 }

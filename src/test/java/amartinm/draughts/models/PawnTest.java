@@ -21,33 +21,33 @@ public class PawnTest extends PieceTest {
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesNotAdvanceThenReturnNotAdvancedError() {
         assertEquals(Error.NOT_ADVANCED,
                 this.piece.isCorrectDiagonalMovement(1,
-                        new MovementBuilder().coordinates(createSameRowCoordinates()).build()));
+                        0, createSameRowCoordinates()));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceTooMuchThenReturnTooMuchError() {
         assertEquals(Error.TOO_MUCH_ADVANCED,
                 this.piece.isCorrectDiagonalMovement(0,
-                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 3)).build()));
+                        0, createOnDiagonalCoordinates(this.piece.getColor(), 3)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceWithoutEatingThenReturnWithoutEatingError() {
         assertEquals(Error.WITHOUT_EATING,
                 this.piece.isCorrectDiagonalMovement(2,
-                        new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 2)).build()));
+                        0, createOnDiagonalCoordinates(this.piece.getColor(), 2)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceThenReturnNullError() {
         assertNull(this.piece.isCorrectDiagonalMovement(1,
-                new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 2)).build()));
+                0, createOnDiagonalCoordinates(this.piece.getColor(), 2)));
     }
 
     @Test
     public void testGivenAPawnWhenCheckIsCorrectDiagonalMovementAndDoesAdvanceMaxDistanceEatingThenReturnNullError() {
         assertNull(this.piece.isCorrectDiagonalMovement(1,
-                new MovementBuilder().coordinates(createOnDiagonalCoordinates(this.piece.getColor(), 1)).build()));
+                0, createOnDiagonalCoordinates(this.piece.getColor(), 1)));
     }
 
 }
