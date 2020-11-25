@@ -25,7 +25,7 @@ public class Game {
                 Coordinate coordinate = new Coordinate(i, j);
                 Color color = Color.getInitialColor(coordinate);
                 Piece piece = null;
-                if (color != null && !color.isNull())
+                if (!color.isNull())
                     piece = new Pawn(color);
                 this.board.put(coordinate, piece);
             }
