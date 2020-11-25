@@ -16,12 +16,7 @@ public class Movement {
         }
         this.coordinates = coordinates;
         this.coordinatesToRemove = new ArrayList<>();
-        MovementChecker correctGlobalMovementChecker = new CorrectGlobalMovementChecker();
-        MovementChecker correctMovementChecker = new CorrectMovementChecker(correctGlobalMovementChecker);
-        MovementChecker targetChecker = new TargetChecker(correctMovementChecker);
-        MovementChecker diagonalMovementChecker = new DiagonalMovementChecker(targetChecker);
-        MovementChecker pieceChecker = new PieceChecker(diagonalMovementChecker);
-        this.movementChecker = new OriginChecker(pieceChecker);
+        this.movementChecker = new MovementCheckerBuilder().build();
     }
 
     public List<Coordinate> getCoordinatesToRemove() {
